@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+  User Id:<br>
+  <input type="text" ng-model="LoginRequest.userId" value="ZL9504">
+  <br>
+  API Key:<br>
+  <input type="text" ng-model="LoginRequest.apiKey" value="l0ozp9sqh9ulzcp6">
+  <br>
+  API Secret:<br>
+  <input type="text" ng-model="LoginRequest.apiSecret" value="x7z8dgcmqbfy74ssqwjuopxa3pchrkle">
+  <br>
+  <br>
+<button ng-click="loginFunction()">Login</button>
+<button ng-click="instrumentsFunction()">Get Instruments for NSE</button>
+<button ng-click="subscribeFunction()">Subscribe</button>
+
+<p>{{ PostDataResponse }}</p>
+
+<p>{{ ResponseDetails }}</p>
+
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+	$scope.LoginRequest = {
+        userId:"ZL9504",
+		apiKey:"l0ozp9sqh9ulzcp6",
+		apiSecret:"x7z8dgcmqbfy74ssqwjuopxa3pchrkle"
+      };
+
+    $scope.loginFunction = function() {
+		$scope.jsonObj = angular.toJson($scope.LoginRequest, false);
+        
+            var config = {
+                headers : {
+                    'Content-Type': 'application/json'
+                }
+            }
+        $http.post('http://localhost:8080/MarketWatcher/rest/MarketService/GetKiteLoginLink', $scope.jsonObj,config)
+            .then(function (response) {
+			    console.log(response, 'res');
+			    $scope.PostDataResponse = response.data.url;
+			    window.open($scope.PostDataResponse);
+			},function (error){
+			    console.log(error, 'can not get data.');
+			});
+    }
+});
+</script> 
+
+</body>
+</html>
