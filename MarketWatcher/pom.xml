@@ -25,11 +25,11 @@
     </plugins>
   </build>
   <dependencies>
-  	<!-- https://mvnrepository.com/artifact/com.rainmatter.kiteconnect/kiteconnect -->
+  	<!-- https://mvnrepository.com/artifact/com.zerodhatech.kiteconnect/kiteconnect -->
 	<dependency>
-	    <groupId>com.rainmatter.kiteconnect</groupId>
+	    <groupId>com.zerodhatech.kiteconnect</groupId>
 	    <artifactId>kiteconnect</artifactId>
-	    <version>1.4.5</version>
+	    <version>3.0.0</version>
 	</dependency>
 
   </dependencies>
