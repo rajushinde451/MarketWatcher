@@ -30,7 +30,6 @@
 	    <groupId>com.rainmatter.kiteconnect</groupId>
 	    <artifactId>kiteconnect</artifactId>
 	    <version>1.4.5</version>
-            <systemPath>${basedir}/WebContent/WEB-INF/lib/kiteconnect.jar</systemPath>
 	</dependency>
 
   </dependencies>
