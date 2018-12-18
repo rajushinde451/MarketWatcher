@@ -1,34 +1,126 @@
+
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
 <body>
-
 <div ng-app="myApp" ng-controller="myCtrl">
-  User Id:<br>
+  User Id:
   <input type="text" ng-model="LoginRequest.userId" value="ZL9504">
   <br>
-  API Key:<br>
+  API Key:
   <input type="text" ng-model="LoginRequest.apiKey" value="l0ozp9sqh9ulzcp6">
   <br>
-  API Secret:<br>
+  API Secret:
   <input type="text" ng-model="LoginRequest.apiSecret" value="x7z8dgcmqbfy74ssqwjuopxa3pchrkle">
   <br>
   <br>
 <button ng-click="loginFunction()">Login</button>
-<button ng-click="instrumentsFunction()">Get Instruments for NSE</button>
 <button ng-click="subscribeFunction()">Subscribe</button>
+<br>
+<br>
+<!-- <button ng-click="instrumentsFunction()">Get Instruments for NSE</button>-->
+Target:
+  <input type="text" ng-model="ConditionInput.target" value="">
+  <br>
+  <br>
+  StopLess:
+  <input type="text" ng-model="ConditionInput.stoploss" value="">
+  <br>
+  <br>
+  QTY Check:
+  <input type="checkbox" ng-model="ConditionInput.qtyCheck" value="">
+  <br>
+  <br>
+  Last30secChangeVol:
+  <input type="text" ng-model="ConditionInput.last30secChangePrice" value="">
+  <br>
+  Last30secChangePrice:
+  <input type="text" ng-model="ConditionInput.last30secChangeVol" value="">
+  <br>
+  Last1minChangeVol:
+  <input type="text" ng-model="ConditionInput.last1minChangePrice" value="">
+  <br>
+  Last1minChangePrice:
+  <input type="text" ng-model="ConditionInput.last1minChangeVol" value="">
+  <br>
+  Last2minChangeVol:
+  <input type="text" ng-model="ConditionInput.last2minChangePrice" value="">
+  <br>
+  Last2minChangePrice:
+  <input type="text" ng-model="ConditionInput.last2minChangeVol" value="">
+  <br>
+  Last5minChangeVol:
+  <input type="text" ng-model="ConditionInput.last5minChangePrice" value="">
+  <br>
+  Last5minChangePrice:
+  <input type="text" ng-model="ConditionInput.last5minChangeVol" value="">
+  <br>
+  <br>
+  <br>
+<button ng-click="executeFunction()">Execute</button>
+<button ng-click="getPotentialStocks()">Get Potential Stocks</button>
 
+<br>
+<br>
+<br>
+<table id="keywords" cellspacing="0" cellpadding="0">
+<thead>
+            <tr>
+                <th><span>Symbol</span></th>
+                <th><span>Last 30 Sec Price</span></th>
+                <th><span>Last 30 Sec Volume</span></th>
+                <th><span>Last 1 Min Price</span></th>
+                <th><span>Last 1 Min Volume</span></th>
+                <th><span>Last 2 Min Price</span></th>
+                <th><span>Last 2 Min Volume</span></th>
+				<th><span>Last 5 Min Price</span></th>
+                <th><span>Last 5 Min Volume</span></th>
+            </tr>
+             </thead>
+            <tbody ng-repeat="stock in Stocks">
+                <tr>
+                    <td>{{stock.symbol}}</td>
+                    <td>{{stock.last30SecPriceChange}}</td>
+                    <td>{{stock.last30SecVolumeChange}}</td>
+                    <td>{{stock.lastOneMinPriceChange}}</td>
+                    <td>{{stock.lastOneMinVolumeChange}}</td>
+                    <td>{{stock.lastTwoMinPriceChange}}</td>
+                    <td>{{stock.lastTwoMinVolumeChange}}</td>
+                    <td>{{stock.lastFiveMinPriceChange}}</td>
+                    <td>{{stock.lastFiveMinVolumeChange}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
 <p>{{ PostDataResponse }}</p>
 
 <p>{{ ResponseDetails }}</p>
 
-</div>
-<script>
+<script type="text/javascript">
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $http) {
 	$scope.LoginRequest = {
+        userId:"ZL9504",
+		apiKey:"l0ozp9sqh9ulzcp6",
+		apiSecret:"x7z8dgcmqbfy74ssqwjuopxa3pchrkle"
       };
 
+	$scope.ConditionInput = {
+			target:0.3,
+			stoploss:0.25,
+			qtyCheck:true,
+			last30secChangePrice:200,
+			last1minChangePrice:200,
+			last2minChangePrice:200,
+			last5minChangePrice:200,
+			last30secChangeVol:200,
+			last1minChangeVol:200,
+			last2minChangeVol:200,
+			last5minChangeVol:200
+	      };
+	
     $scope.loginFunction = function() {
 		$scope.jsonObj = angular.toJson($scope.LoginRequest, false);
         
@@ -46,7 +138,45 @@ app.controller('myCtrl', function($scope, $http) {
 			    console.log(error, 'can not get data.');
 			});
     }
+    
+    $scope.executeFunction = function()
+    {
+    	$scope.jsonObjCondition = angular.toJson($scope.ConditionInput, false);
+    	
+    	var config = {
+                headers : {
+                    'Content-Type': 'application/json'
+                }
+            }
+    	
+    	$http.post('http://localhost:8080/MarketWatcher/rest/MarketService/UpdateCondition', $scope.jsonObjCondition,config)
+    }
+    
+    $scope.subscribeFunction = function() {
+        $http.get('http://localhost:8080/MarketWatcher/rest/MarketService/Subscribe')
+            .then(function (response) {
+			    console.log(response, 'res');
+			},function (error){
+			    console.log(error, 'can not get data.');
+			});
+    }
+    
+    $scope.getPotentialStocks = function() {
+        $http.get('http://localhost:8080/MarketWatcher/rest/MarketService/GetPotentialStocks')
+            .then(function (response) {
+			    console.log(response.data, 'res');
+				$scope.Stocks = response.data;
+				//$sope.IsVisible = true;
+			},function (error){
+			    console.log(error, 'can not get data.');
+			});
+    }
+    setInterval(function(){
+    	  $scope.getPotentialStocks();
+    	}, 1000)
 });
+
+
 </script> 
 
 </body>

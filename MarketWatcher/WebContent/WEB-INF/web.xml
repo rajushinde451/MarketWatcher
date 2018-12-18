@@ -11,15 +11,6 @@
    </servlet> 
    <servlet-mapping> 
       <servlet-name>Jersey RESTful Application</servlet-name> 
-      <url-pa"C:/Users/Rajkumar/Desktop/TestClass.java"ttern>/rest/*</url-pattern> 
+      <url-pattern>/rest/*</url-pattern> 
    </servlet-mapping>   
-   <filter>
-   <filter-name>CorsFilter</filter-name>
-   <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
- </filter>
- <filter-mapping>
-   <filter-name>CorsFilter</filter-name>
-   <url-pattern>/*</url-pattern>
- </filter-mapping>
- 
 </web-app>

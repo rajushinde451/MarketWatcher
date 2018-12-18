@@ -8,19 +8,30 @@ public class CustomTick {
 	
 	 public Tick tick ;
      public String symbol ;
-     public float last30SecPriceChange ;
-     public float last30SecVolumeChange ;
-     public float lastOneMinPriceChange ;
-     public float lastOneMinVolumeChange ;
-     public float lastTwoMinPriceChange ;
-     public float lastTwoMinVolumeChange ;
-     public float lastFiveMinPriceChange ;
-     public float lastFiveMinVolumeChange ;
+     public float last30SecPriceChange =0;
+     public float last30SecVolumeChange =0;
+     public float lastOneMinPriceChange=0;
+     public float lastOneMinVolumeChange =0;
+     public float lastTwoMinPriceChange =0;
+     public float lastTwoMinVolumeChange=0;
+     public float lastFiveMinPriceChange =0;
+     public float lastFiveMinVolumeChange =0;
      public Date time ;
      public Date last30secTime;
      public Date last1MinTime ;
      public Date last2MinTime ;
      public Date last5MinTime ;
+     public String currentState;
+     public Boolean isSwitched;
+     public double qtySinceChanged;
+     public QuantityIndicator qtyIndicator;
+     
+	public QuantityIndicator getQtyIndicator() {
+		return qtyIndicator;
+	}
+	public void setQtyIndicator(QuantityIndicator qtyIndicator) {
+		this.qtyIndicator = qtyIndicator;
+	}
 	public Tick getTick() {
 		return tick;
 	}
