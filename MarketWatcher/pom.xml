@@ -39,11 +39,18 @@
           <warSourceDirectory>WebContent</warSourceDirectory>
         </configuration>
       </plugin>
-	    <plugin>
-        <groupId>com.google.cloud.tools</groupId>
-        <artifactId>appengine-maven-plugin</artifactId>
-        <version>${appengine-maven-plugin-version}</version>
-      </plugin>
+	<plugins>
+   <plugin>
+     <groupId>com.google.cloud.tools</groupId>
+     <artifactId>appengine-maven-plugin</artifactId>
+     <version>1.3.2</version>
+     <configuration>
+       <stage.enableJarSplitting>true</stage.enableJarSplitting>
+       <deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
+       <cloudSdkPath>/usr/foo/path/to/cloudsdk</cloudSdkPath>
+     </configuration>
+  </plugin>
+</plugins>
     </plugins>
   </build>
   <dependencies>
