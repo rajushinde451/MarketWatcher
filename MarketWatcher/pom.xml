@@ -56,7 +56,6 @@
                     <enableJarClasses>false</enableJarClasses>
                     <version>${app.version}</version>
                 </configuration>
-            </executions>
             </plugin>
             <plugin>
                 <groupId>com.google.appengine</groupId>
