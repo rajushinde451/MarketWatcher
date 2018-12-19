@@ -12,40 +12,63 @@
    </parent>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
-
-    <appengine.app.version>1</appengine.app.version>
-    <appengine.target.version>1.9.64</appengine.target.version>
-    <appengine-maven-plugin-version>1.3.2</appengine-maven-plugin-version>
+	<maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+	<app.id>MarketWatcher</app.id>
+    <app.version>1</app.version>
+	<appengine.version>1.9.32</appengine.version>
+	<gcloud.plugin.version>2.0.9.74.v20150814</gcloud.plugin.version>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 	
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.2.1</version>
-        <configuration>
-          <warSourceDirectory>WebContent</warSourceDirectory>
-        </configuration>
-      </plugin>
-   <plugin>
-     <groupId>com.google.cloud.tools</groupId>
-     <artifactId>appengine-maven-plugin</artifactId>
-     <version>1.3.2</version>
-  </plugin>
+	<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>3.1</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+
+                    <archiveClasses>true</archiveClasses>
+                    <webResources>
+                        <resource>
+                            <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+                            <filtering>true</filtering>
+                            <targetPath>WEB-INF</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${appengine.version}</version>
+                <configuration>
+                    <enableJarClasses>false</enableJarClasses>
+                    <version>${app.version}</version>
+                </configuration>
+            </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>gcloud-maven-plugin</artifactId>
+                <version>${gcloud.plugin.version}</version>
+                <configuration>
+                    <set_default>true</set_default>
+                </configuration>
+            </plugin>
     </plugins>
   </build>
+  
   <dependencies>
   	<!-- https://mvnrepository.com/artifact/com.zerodhatech.kiteconnect/kiteconnect -->
 	<dependency>
@@ -69,7 +92,7 @@
 <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-1.0-sdk</artifactId>
-      <version>1.9.64</version>
+      <version>${appengine.version}</version>
     </dependency>
 
 
