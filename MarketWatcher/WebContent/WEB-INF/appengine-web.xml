@@ -3,16 +3,4 @@
     <threadsafe>true</threadsafe>
     <runtime>java8</runtime>
     <display-name>Market Watcher</display-name> 
-   <servlet> 
-      <servlet-name>Jersey RESTful Application</servlet-name> 
-      <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> 
-      <init-param> 
-         <param-name>jersey.config.server.provider.packages</param-name> 
-         <param-value>com.market</param-value> 
-      </init-param> 
-   </servlet> 
-   <servlet-mapping> 
-      <servlet-name>Jersey RESTful Application</servlet-name> 
-      <url-pattern>/rest/*</url-pattern> 
-   </servlet-mapping>   
 </appengine-web-app>
